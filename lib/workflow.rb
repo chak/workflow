@@ -157,12 +157,12 @@ module Workflow
 
     def run_on_transition(from, to, event, *args)
       instance_exec(from.name, to.name, event, *args, &spec.on_transition_proc) if spec.on_transition_proc
-      self.audit_workflow_state_change(event, from, to) if self.respond_to?(:audit_workflow_state_change)
     end
 
     def run_after_transition(from, to, event, *args)
       instance_exec(from.name, to.name, event, *args, &spec.after_transition_proc) if
         spec.after_transition_proc
+      self.audit_workflow_state_change(event, from, to) if self.respond_to?(:audit_workflow_state_change)
     end
 
     def run_action(action, *args)
